@@ -11,7 +11,7 @@ class Torrent(Item):
 	magnet  = Field()
 	updated = Field()
 	added   = Field()		
-	seeds   = Field()
+	seeds+- = Field()
 	size    = Field()
 	visit_id = Field()
 	visit_status = Field()
