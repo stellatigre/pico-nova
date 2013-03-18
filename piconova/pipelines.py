@@ -4,5 +4,8 @@
 # See: http://doc.scrapy.org/topics/item-pipeline.html
 
 class PiconovaPipeline(object):
-    def process_item(self, item, spider):
-        return item
+    def process_item(self, item, spider):	
+		for p in item:
+			entry = item[p][0] 
+			entry.encode('utf-8', 'ignore')
+		return item
