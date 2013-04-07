@@ -13,7 +13,7 @@ def get_reqs(url_list):
 	for next in url_list: return next.url		
 			
 class PicoSpider(CrawlSpider):
-	name = "pico"
+	name = "piconova"
 	start_urls = ["http://www.mininova.org"]
 	allowed_domains=["www.mininova.org"]
 

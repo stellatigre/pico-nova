@@ -80,9 +80,9 @@ class PirateSpider(CrawlSpider):
 		#page['seeds']	 = hxs.select('//*[@id="details"]/dl[1]/dd[7]/text()').extract()
 		
 		#attempts the format with a picture first.		
-		page['leeches']	 = hxs.select('//*[@id="details"]/dl[1]/dd[9]/text()').extract()
-		if page['leeches']: hxs.select('//*[@id="details"]/dl[1]/dd[8]/text()').extract()
-		else: page['leeches'] = hxs.select('//*[@id="details"]/dl[2]/dd[4]/text()').extract()
+		page['leech']	 = hxs.select('//*[@id="details"]/dl[1]/dd[9]/text()').extract()
+		if page['leech']: pass #hxs.select('//*[@id="details"]/dl[1]/dd[8]/text()').extract()
+		else: page['leech'] = hxs.select('//*[@id="details"]/dl[2]/dd[4]/text()').extract()
 
 		page['size']     = hxs.select('//*[@id="details"]/dl[1]/dd[3]/text()').extract()
 		#if page['size']: pass
