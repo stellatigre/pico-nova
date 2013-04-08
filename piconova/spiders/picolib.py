@@ -35,7 +35,7 @@ class PicoSpider(CrawlSpider):
 
                 #make torrent page requests from subcategories
         def parse_subcategory(self, response):
-                        slx = SgmlLinkExtracto(allow=self.tor_links,deny=self.deny_rules)
+                        slx = SgmlLinkExtractor(allow=self.tor_links,deny=self.deny_rules)
                         sub_list = slx.extract_links(response)
                         sub_req= get_reqs(sub_list)
                         m = make_requests_from_url(sub_req)
