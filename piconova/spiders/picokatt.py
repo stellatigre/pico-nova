@@ -12,8 +12,6 @@ class KattSpider(PicoSpider):
     deny_rules = ('/search/*', 'utorrent.btsearch', '/blog/*',
                   '/user/*', '/community/*', '/comments/*', '/show/*')
 
-    tor_links = '/*.html'
-
     rules = (
         Rule(SLE(allow=('/*.html', ), deny=deny_rules), callback='parse_torrent', follow=True),
         Rule(SLE(allow=('ka.tt/*/',), deny=deny_rules), callback='parse_category', follow=True))

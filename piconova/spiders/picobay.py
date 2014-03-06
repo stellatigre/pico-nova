@@ -24,17 +24,16 @@ class PirateSpider(CrawlSpider):
     start_urls = ["http://thepiratebay.se/browse"]
     allowed_domains = ["thepiratebay.se"]
 
+	xpath_dict = 
+
     rules = (
-        Rule(SgmlLinkExtractor(allow=('/torrent/',),
-                               ), callback='parse_tpb_torrent', follow=True),
-        Rule(SgmlLinkExtractor(allow=(
-                               '/browse/*/*/7',),), callback='tpb_category_org', follow=True),
+        Rule(SgmlLinkExtractor(allow=('/torrent/',),), callback='parse_tpb_torrent', follow=True),
+        Rule(SgmlLinkExtractor(allow=('/browse/*/*/7',),), callback='tpb_category_org', follow=True),
         Rule(SgmlLinkExtractor(allow=('/browse/',),), callback='parse_tpb_category', follow=True))
 
             # in this one, we're not making any requests, just links
     def parse_tpb_category(self, response):
-        slx = SgmlLinkExtractor(allow='/torrent/', deny=(
-            '/img*', '/%0Ahttp://*'))
+        slx = SgmlLinkExtractor(allow='/torrent/', deny=('/img*', '/%0Ahttp://*'))
         sub_cats = slx.extract_links(response)
         for s in sub_cats:
             # print s

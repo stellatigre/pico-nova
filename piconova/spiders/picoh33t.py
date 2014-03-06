@@ -29,7 +29,7 @@ class PicoSpider(CrawlSpider):
         # follow=True),
         Rule(SgmlLinkExtractor(allow=('/category/',),), callback='parse_h33t_category', follow=True))
 
-            # in this one, we're not making any requests, just links
+    # in this one, we're not making any requests, just links
     def parse_h33t_category(self, response):
         tlx = SgmlLinkExtractor(allow='/torrent/')
         torrents = tlx.extract_links(response)
@@ -37,7 +37,7 @@ class PicoSpider(CrawlSpider):
             req = make_requests_from_url(t.url)
             return req
 
-            # make torrent page requests from subcategories
+   	# make torrent page requests from subcategories
     def parse_subcategory(self, response):
         slx = SgmlLinkExtractor()
         sub_list = slx.extract_links(response)
