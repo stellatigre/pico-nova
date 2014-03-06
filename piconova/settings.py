@@ -1,6 +1,5 @@
 # Scrapy settings for piconova project
-
-#     http://doc.scrapy.org/topics/settings.html
+#http://doc.scrapy.org/topics/settings.html
 
 BOT_NAME = 'piconova'
 CONCURRENT_REQUESTS = 420
