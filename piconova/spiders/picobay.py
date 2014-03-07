@@ -5,19 +5,16 @@ from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import HtmlXPathSelector
 from scrapy.http import Request
 from items import Torrent
-
-def make_requests_from_url(url):
-    return Request(url, dont_filter=False, meta={'start_url': url})
+from picolib import try_xpaths, make_request_from_url, PicoSpider
 
 
-def get_reqs(url_list):
-    for next in url_list:
-        return next.url
-
-class PirateSpider(CrawlSpider):
+class PirateSpider(PicoSpider):
     name = "picobay"
     start_urls = ["http://thepiratebay.se/browse"]
     allowed_domains = ["thepiratebay.se"]
+
+	tor_links = '/torrent/'
+	deny_rules = ('/img*', '/%0Ahttp://*')
 
 	xpath_dict = {
 		'title'    : ('//*[@id="title"]/text[]',),
@@ -37,11 +34,10 @@ class PirateSpider(CrawlSpider):
 					  '//*[@id="details"]/dl[2]/dd[1]/text()'),
 		'uploader' : ('//*[@id="details"]/dl[1]/dd[6]/a/text()',
 					  '//*[@id="details"]/dl[2]/dd[2]/a/text()')
-
 	}		
 					 															
     rules = (
-        Rule(SgmlLinkExtractor(allow=('/torrent/',),), callback='parse_tpb_torrent', follow=True),
+        Rule(SgmlLinkExtractor(allow=('/torrent/',),), callback='parse_torrent', follow=True),
         Rule(SgmlLinkExtractor(allow=('/browse/*/*/7',),), callback='tpb_category_org', follow=True),
         Rule(SgmlLinkExtractor(allow=('/browse/',),), callback='parse_tpb_category', follow=True))
 
@@ -50,8 +46,8 @@ class PirateSpider(CrawlSpider):
         slx = SgmlLinkExtractor(allow='/torrent/', deny=('/img*', '/%0Ahttp://*'))
         sub_cats = slx.extract_links(response)
         for s in sub_cats:
-            req = make_requests_from_url(s.url)
-            return req
+            request = make_requests_from_url(s.url)
+            return request
 
         # make torrent page requests from subcategories
     def tpb_category_org(self, response):
@@ -60,13 +56,6 @@ class PirateSpider(CrawlSpider):
         sub_req = get_reqs(sub_list)
         m = make_requests_from_url(sub_req)
         return m
-
-        # actual Pirate Bay torrent pages scraped here
-    def parse_tpb_torrent(self, response):
-        hxs = HtmlXPathSelector(response)
-        page = Torrent()
-
-		try_xpaths(page, self.xpath_dict, response)
 
 
 spider = PirateSpider()
