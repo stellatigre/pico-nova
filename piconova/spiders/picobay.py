@@ -4,13 +4,13 @@ from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import HtmlXPathSelector
 from scrapy.http import Request
 from items import Torrent
-from picolib import try_xpaths, make_requests_from_url, PicoSpider
+from picolib import PicoSpider
 
 
 class PirateSpider(PicoSpider):
-    name = "picobay"
-    start_urls = ["http://thepiratebay.se/browse"]
-    allowed_domains = ["thepiratebay.se"]
+	name = "picobay"
+	start_urls = ["http://thepiratebay.se/browse"]
+	allowed_domains = ["thepiratebay.se"]
 
 	tor_links = '/torrent/'
 	deny_rules = ('/img*', '/%0Ahttp://*')
@@ -35,26 +35,19 @@ class PirateSpider(PicoSpider):
 					  '//*[@id="details"]/dl[2]/dd[2]/a/text()')
 	}		
 					 															
-    rules = (
+	rules = (
         Rule(SgmlLinkExtractor(allow=('/torrent/',),), callback='parse_torrent', follow=True),
         Rule(SgmlLinkExtractor(allow=('/browse/*/*/7',),), callback='tpb_category_org', follow=True),
-        Rule(SgmlLinkExtractor(allow=('/browse/',),), callback='parse_tpb_category', follow=True))
-
-    # in this one, we're not making any requests, just links
-    def parse_tpb_category(self, response):
-        slx = SgmlLinkExtractor(allow='/torrent/', deny=('/img*', '/%0Ahttp://*'))
-        sub_cats = slx.extract_links(response)
-        for s in sub_cats:
-            request = make_requests_from_url(s.url)
-            return request
+        Rule(SgmlLinkExtractor(allow=('/browse/',),), callback='parse_category', follow=True)
+	)
 
     # make torrent page requests from subcategories
-    def tpb_category_org(self, response):
-        slx = SgmlLinkExtractor()
-        sub_list = slx.extract_links(response)
-        sub_req = get_reqs(sub_list)
-        m = make_requests_from_url(sub_req)
-        return m
+	def tpb_category_org(self, response):
+		slx = SgmlLinkExtractor()
+		sub_list = slx.extract_links(response)
+		sub_req = get_reqs(sub_list)
+		m = make_requests_from_url(sub_req)
+		return m
 
 
 spider = PirateSpider()

@@ -5,7 +5,7 @@ from scrapy.http import Request
 from items import Torrent
 
 class PicoSpider(CrawlSpider):
-    name = "picospider"
+	name = "picospider"
 	xpath_dict = {}		# When subclassed for real use, fill in dictionary of xpaths
     	
 	def get_reqs(url_list):
@@ -21,19 +21,19 @@ class PicoSpider(CrawlSpider):
 					break
 
 	def make_requests_from_url(url):
-    	return Request(url, dont_filter=False, meta={'start_url': url})
+		return Request(url, dont_filter=False, meta={'start_url': url})
 
 	# in this one, we're not making any requests, just links
-    def parse_category(self, response):
-        tlx = SgmlLinkExtractor(allow=self.tor_links, deny=self.deny_rules)
-        torrents = tlx.extract_links(response)
-        for t in torrents:
-            request = make_requests_from_url(t.url)
-            return request
+	def parse_category(self, response):
+		tlx = SgmlLinkExtractor(allow=self.tor_links, deny=self.deny_rules)
+		torrents = tlx.extract_links(response)
+		for t in torrents:
+			request = make_requests_from_url(t.url)
+			return request
 
 	parse_subcategory = parse_category;
 
-    def parse_torrent(self, response):
-        page = Torrent()
-        try_xpaths(page, self.xpath_dict, response)
-        return page
+	def parse_torrent(self, response):
+		page = Torrent()
+		try_xpaths(page, self.xpath_dict, response)
+		return page
