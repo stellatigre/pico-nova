@@ -5,8 +5,6 @@ from scrapy.selector import HtmlXPathSelector
 from scrapy.item import Item, Field
 from scrapy.http import Request
 from items import Torrent
-import celery
-
 
 def make_requests_from_url(url):
     return Request(url, dont_filter=False, meta={'start_url': url})
@@ -23,11 +21,9 @@ class PicoSpider(CrawlSpider):
     allowed_domains = ["h33t.com"]
 
     rules = (
-        Rule(SgmlLinkExtractor(allow=('/torrent/',),),
-             callback='parse_h33t_torrent', follow=True),
-        # Rule(SgmlLinkExtractor(allow=('/sub/',),),callback='parse_subcategory',
-        # follow=True),
-        Rule(SgmlLinkExtractor(allow=('/category/',),), callback='parse_h33t_category', follow=True))
+        Rule(SgmlLinkExtractor(allow=('/torrent/',),), callback='parse_h33t_torrent', follow=True),
+        Rule(SgmlLinkExtractor(allow=('/category/',),), callback='parse_h33t_category', follow=True)
+	)
 
     # in this one, we're not making any requests, just links
     def parse_h33t_category(self, response):
@@ -49,11 +45,6 @@ class PicoSpider(CrawlSpider):
     def parse_h33t_torrent(self, response):
         hxs = HtmlXPathSelector(response)
         page = Torrent()
-
-        # if there's 1 or less seeders, who cares?
-        # if eval(hxs.select('//*[@id="seedsleechers"]//text()').extract()[0]) <= 1:
-        #	print'Not really seeded... discarded.'
-        #	return None
 
         page['torrent'] = hxs.select(
             '/html/body/table/tr/td/table/tr[3]/td/table/tr/td/div/table[1]/tr[2]/td[2]/table/tr[1]/td[2]/div/a/@href').extract()
