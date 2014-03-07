@@ -1,11 +1,10 @@
 #! /usr/bin/env python
-from scrapy.spider import BaseSpider
-from scrapy.contrib.spiders import CrawlSpider, Rule
+from scrapy.contrib.spiders import Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import HtmlXPathSelector
 from scrapy.http import Request
 from items import Torrent
-from picolib import try_xpaths, make_request_from_url, PicoSpider
+from picolib import try_xpaths, make_requests_from_url, PicoSpider
 
 
 class PirateSpider(PicoSpider):
@@ -41,7 +40,7 @@ class PirateSpider(PicoSpider):
         Rule(SgmlLinkExtractor(allow=('/browse/*/*/7',),), callback='tpb_category_org', follow=True),
         Rule(SgmlLinkExtractor(allow=('/browse/',),), callback='parse_tpb_category', follow=True))
 
-            # in this one, we're not making any requests, just links
+    # in this one, we're not making any requests, just links
     def parse_tpb_category(self, response):
         slx = SgmlLinkExtractor(allow='/torrent/', deny=('/img*', '/%0Ahttp://*'))
         sub_cats = slx.extract_links(response)
@@ -49,7 +48,7 @@ class PirateSpider(PicoSpider):
             request = make_requests_from_url(s.url)
             return request
 
-        # make torrent page requests from subcategories
+    # make torrent page requests from subcategories
     def tpb_category_org(self, response):
         slx = SgmlLinkExtractor()
         sub_list = slx.extract_links(response)
