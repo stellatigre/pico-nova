@@ -12,8 +12,8 @@ class PicoSpider(CrawlSpider):
 		for next in url_list:
 			return next.url
 		
-	def try_xpaths(Torrent, xp_dict, response):
-		hxs = HtmlXPathSelector(response)
+	def try_xpaths(Torrent, xp_dict, response): # the tuples of xpaths included in the dict
+		hxs = HtmlXPathSelector(response)		# go in order from first to last
 		for field in xp_dict:
 			for xp in xp_dict[field]:
 				Torrent[field] = hxs.select(xp).extract()
