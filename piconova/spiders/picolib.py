@@ -8,11 +8,11 @@ class PicoSpider(CrawlSpider):
 	name = "picospider"
 	xpath_dict = {}		# When subclassed for real use, fill in dictionary of xpaths
     	
-	def get_reqs(url_list):
+	def get_reqs(self, url_list):
 		for next in url_list:
 			return next.url
 		
-	def try_xpaths(Torrent, xp_dict, response): # the tuples of xpaths included in the dict
+	def try_xpaths(self, Torrent, xp_dict, response): # the tuples of xpaths included in the dict
 		hxs = HtmlXPathSelector(response)		# go in order from first to last
 		for field in xp_dict:
 			for xp in xp_dict[field]:
@@ -20,7 +20,7 @@ class PicoSpider(CrawlSpider):
 				if Torrent[field]:
 					break
 
-	def make_requests_from_url(url):
+	def make_requests_for_url(self, url):
 		return Request(url, dont_filter=False, meta={'start_url': url})
 
 	# in this one, we're not making any requests, just links
@@ -28,12 +28,12 @@ class PicoSpider(CrawlSpider):
 		tlx = SgmlLinkExtractor(allow=self.tor_links, deny=self.deny_rules)
 		torrents = tlx.extract_links(response)
 		for t in torrents:
-			request = make_requests_from_url(t.url)
+			request = self.make_requests_for_url(t.url)
 			return request
 
 	parse_subcategory = parse_category;
 
 	def parse_torrent(self, response):
 		page = Torrent()
-		try_xpaths(page, self.xpath_dict, response)
+		self.try_xpaths(page, self.xpath_dict, response)
 		return page

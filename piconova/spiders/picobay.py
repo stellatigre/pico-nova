@@ -46,7 +46,7 @@ class PirateSpider(PicoSpider):
 		slx = SgmlLinkExtractor()
 		sub_list = slx.extract_links(response)
 		sub_req = get_reqs(sub_list)
-		m = make_requests_from_url(sub_req)
+		m = self.make_requests_for_url(sub_req)
 		return m
 
 
