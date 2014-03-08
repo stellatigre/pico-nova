@@ -1,7 +1,7 @@
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor as SLE
 from scrapy.contrib.spiders import Rule
 from items import Torrent
-from picolib import PicoSpider, try_xpaths
+from picolib import PicoSpider
 
 class MiniSpider(PicoSpider):
 
@@ -12,7 +12,7 @@ class MiniSpider(PicoSpider):
     tor_links = '/tor/'
 
     rules = (
-        Rule(SLE(allow=tor_links, deny=deny_rules), callback='parse_torrent', follow=True),
+        Rule(SLE(allow=tor_links, deny=deny_rules), callback='parse_mininova_torrent', follow=True),
         Rule(SLE(allow=('/cat/', '/sub/'), deny=deny_rules), callback='parse_category', follow=True))
 
     xpath_dict = {
@@ -30,7 +30,7 @@ class MiniSpider(PicoSpider):
     }
 
     # mininova data needs some cleanup so we override this one
-    def parse_torrent(self, response):
+    def parse_mininova_torrent(self, response):
         page = Torrent()
         try_xpaths(page, self.xpath_dict, response)
         if len(page['torrent']) > 1:
