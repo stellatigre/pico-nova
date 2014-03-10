@@ -16,16 +16,16 @@ class PirateSpider(PicoSpider):
 	deny_rules = ('/img*', '/%0Ahttp://*')
 
 	xpath_dict = {
-		'title'    : ('//*[@id="title"]/text[]',),
-		'seeds'    : ('//*[@id="details"]/dl[1]/dd[7]/text[]', 
-			      	  '//*[@id="details"]/dl[2]/dd[3]/text[]',
-			      	  '//*[@id="details"]/dl[1]/dd[8]//text[]'),
+		'title'    : ('//*[@id="title"]'),
+		'seeds'    : ('//*[@id="details"]/dl[1]/dd[7]/text()', 
+			      	  '//*[@id="details"]/dl[2]/dd[3]/text()',
+			      	  '//*[@id="details"]/dl[1]/dd[8]//text()'),
 		'magnet'   : ('//*[@id="details"]/div[3]/a[1]/@href',
 			      	  '//*[@id="details"]/div[4]/a/@href',
 	                  '/html/body/div[3]/div[2]/div/div/div/div[2]/div[10]/a/@href'),
 		'torrent'  : ('//*[@id="details"]/div[4]/a[2]/@href',
 			      	  '//*[@id="details"]/div[3]/a[2]/@href'),
-		'category' : ('//*[@id="details"]/dl[1]/dd[1]/a/text()'),
+		'category' : ('//*[@id="details"]/dl[1]/dd[1]/a'),
 		'leech'    : ('//*[@id="details"]/dl[1]/dd[9]/text()',
 			      	  '//*[@id="details"]/dl[2]/dd[4]/text()'),
 		'size'     : ('//*[@id="details"]/dl[1]/dd[3]/text()',),
