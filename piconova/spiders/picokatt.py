@@ -31,18 +31,29 @@ class KattSpider(PicoSpider):
 		'added': ['//*[@id="mainDetailsTable"]/tr/td[1]/div[6]/text()[1]',],
 	}
 
-	def trim_size(self, raw_page_size):
+	def trim_size(self, raw_size):
 		non_decimal = re.compile(r'[^\d.]+')		# Removing irrelevant alphanumeric chars
-		page_size = raw_page_size[0]
-		page_size = non_decimal.sub('', page_size)
-		return page_size
+		size = non_decimal.sub('', raw_size)
+		return size
+
+	def trim_added(self, raw_added):
+		added = re.sub('\nAdded on ', '' , raw_added);
+		added = re.sub(' by ', '' , added);
+		return added 
+
+	def trim_title(self, raw_title):
+		title = re.sub('Download ', '' , raw_title)
+		title = re.sub('Torrent - KickassTorrents', '', title)
+		return title
 
 	def parse_katt_torrent(self, response):
 		page = Torrent()
 		self.try_xpaths(page, self.xpath_dict, response)
-		
-		page['size'] = self.trim_size(page['size'])
 		self.singular(page)
+
+		page['size']  = self.trim_size(page['size'])	# cleanup before sending into item pipeline
+		page['added'] = self.trim_added(page['added'])
+		page['title'] = self.trim_title(page['title'])
 
 		return page
 
