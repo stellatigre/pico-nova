@@ -7,8 +7,18 @@ COOKIES_ENABLED = False
 SPIDER_MODULES = ['piconova.spiders']
 NEWSPIDER_MODULE = 'piconova.spiders'
 
+MONGODB_SERVER = 'localhost'
+MONGODB_PORT = 27017
+MONGODB_DB = 'picospider'
+MONGODB_COLLECTION = 'torrents'
+
 DOWNLOADER_MIDDLEWARES = {'piconova.random_user_agent.RandomUserAgentMiddleware': 400,
                           'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None,}
+
+ITEM_PIPELINES = {
+	'piconova.pipelines.MongoDBPipeline': 720
+}
+
 
 USER_AGENT_LIST = ('Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3',
 				   'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/0.2.153.1 Safari/525.19',#
