@@ -11,6 +11,12 @@ class PicoSpider(CrawlSpider):
 	def get_reqs(self, url_list):
 		for next in url_list:
 			return next.url
+
+	def singular(self, torrent):
+		for field in torrent:
+			if len(torrent[field]) == 1:
+				torrent[field] = torrent[field][0]
+
 		
 	def try_xpaths(self, Torrent, xp_dict, response): # the tuples of xpaths included in the dict
 		hxs = HtmlXPathSelector(response)		# go in order from first to last
@@ -36,4 +42,5 @@ class PicoSpider(CrawlSpider):
 	def parse_torrent(self, response):
 		page = Torrent()
 		self.try_xpaths(page, self.xpath_dict, response)
+		self.singular(page)
 		return page
