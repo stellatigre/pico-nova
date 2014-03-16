@@ -3,7 +3,7 @@
 
 BOT_NAME = 'piconova'
 CONCURRENT_REQUESTS = 420
-COOKIES_ENABLED = False
+COOKIES_ENABLED = True
 SPIDER_MODULES = ['piconova.spiders']
 NEWSPIDER_MODULE = 'piconova.spiders'
 
