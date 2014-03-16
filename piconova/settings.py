@@ -4,6 +4,7 @@
 BOT_NAME = 'piconova'
 CONCURRENT_REQUESTS = 420
 COOKIES_ENABLED = True
+COOKIES_DEBUG = False
 SPIDER_MODULES = ['piconova.spiders']
 NEWSPIDER_MODULE = 'piconova.spiders'
 
@@ -12,8 +13,9 @@ MONGODB_PORT = 27017
 MONGODB_DB = 'picospider'
 MONGODB_COLLECTION = 'torrents'
 
-DOWNLOADER_MIDDLEWARES = {'piconova.random_user_agent.RandomUserAgentMiddleware': 400,
-                          'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None,}
+DOWNLOADER_MIDDLEWARES = {
+	'piconova.random_user_agent.RandomUserAgentMiddleware': 400,
+}
 
 ITEM_PIPELINES = {
 	'piconova.pipelines.MongoDBPipeline': 720
@@ -21,7 +23,7 @@ ITEM_PIPELINES = {
 
 
 USER_AGENT_LIST = ('Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3',
-				   'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/0.2.153.1 Safari/525.19',#
+				   'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/0.2.153.1 Safari/525.19',
 				   'Mozilla/5.0 (Windows NT 6.1; rv:15.0) Gecko/20120716 Firefox/15.0a2',
 				   'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:14.0) Gecko/20100101 Firefox/14.0.1',
 				   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.13+ (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2',
@@ -29,4 +31,3 @@ USER_AGENT_LIST = ('Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) Gec
 				   'Mozilla/5.0 (Windows; U; MSIE 9.0; WIndows NT 9.0; en-US)',
 				   'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0')
 
-spider_cookies = [{'user_legal_age' : 'yes'}]
