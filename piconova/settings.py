@@ -28,3 +28,5 @@ USER_AGENT_LIST = ('Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) Gec
 				   'Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5355d Safari/8536.25',
 				   'Mozilla/5.0 (Windows; U; MSIE 9.0; WIndows NT 9.0; en-US)',
 				   'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0')
+
+spider_cookies = [{'user_legal_age' : 'yes'}]

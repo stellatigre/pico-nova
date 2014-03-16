@@ -2,9 +2,11 @@ from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import HtmlXPathSelector
 from scrapy.http import Request
+from piconova.settings import spider_cookies
 from items import Torrent
 
 class PicoSpider(CrawlSpider):
+	
 	name = "picospider"
 	xpath_dict = {}		# When subclassed for real use, fill in dictionary of xpaths
     	
@@ -27,7 +29,7 @@ class PicoSpider(CrawlSpider):
 					break
 
 	def make_requests_for_url(self, url):
-		return Request(url, dont_filter=False, meta={'start_url': url})
+		return Request(url, dont_filter=False, meta={'start_url': url}, cookies=spider_cookies)
 
 	# in this one, we're not making any requests, just links
 	def parse_category(self, response):
