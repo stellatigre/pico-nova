@@ -31,8 +31,11 @@ class PicoSpider(CrawlSpider):
 		if Torrent[field]:				# if we got a value, 
 		    break					# move on to the next field
 
-    def make_requests_for_url(self, url):
-	yield Request(url, dont_filter=False, meta={'start_url': url}, cookies=self.spider_cookies)
+    def make_requests_for_url(self, link):
+	yield Request(link.url, dont_filter=False, meta={'start_url': link.url}, cookies=self.spider_cookies)
+
+    def make_all_requests(self, urls):
+	map(self.make_requests_for_url, urls)
 
     def get_links(self, response, allowed):	
 	tlx = Linx(allow=allowed, deny=self.deny_rules)
@@ -40,10 +43,8 @@ class PicoSpider(CrawlSpider):
 	return links
 
     def parse_category(self, response):
-	links = self.get_links(response, self.torrent_links+self.category_links)	
-	for link in links:
-	    request = self.make_requests_for_url(link.url)
-	    return request
+	links = self.get_links(response, self.torrent_links+self.category_links)
+	self.make_all_requests(links)	
 
     def parse_torrent(self, response):
 	page = Torrent()
