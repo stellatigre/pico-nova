@@ -34,15 +34,15 @@ mininova.org : "piconova"
 fenopy.se : "fenopico"
 
 
-Dependencies 
-=============
+Dependencies & Installation
+===========================
 
 * Python 2.7
 * Scrapy - depends on `pip`, `lxml` , `OpenSSL` ; see http://doc.scrapy.org/en/latest/intro/install.html for more on installing scrapy
 
 
-Data Store Setup (MongoDB)
-==========================
+Data Store Setup / Use (MongoDB)
+===============================
 
 This spider stores scraped torrent objects in a MongoDB collection.  To setup:
 
@@ -52,8 +52,15 @@ This spider stores scraped torrent objects in a MongoDB collection.  To setup:
 
 3) In another terminal, run the MongoDB shell with the (default) name of our database : `mongo picospider`
 
-   This initiliases our database so we can add data to it.  MongoDB should be ready to use now.
-  
+   This initiliases our database so we can add data to it.  MongoDB should be ready to use now.  
+   
+4) By default, this is setup to use the `torrents` collection inside our `picospider` database. To look through any stored data from the spider in your `mongo` shell, `.find()` is your friend: 
+
+    db.torrents.find()
+    db.torrents.find().length() 
+    
+See http://docs.mongodb.org/manual/reference/method/db.collection.find/#db.collection.find for more on querying if needed.
+ 
 
 
 
