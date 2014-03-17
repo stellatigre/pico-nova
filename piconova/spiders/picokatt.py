@@ -26,38 +26,40 @@ class KattSpider(PicoSpider):
     )
 
     xpath_dict = {
-	    'title': ['//title/text()',],
-	    'torrent': ['//*[@id="mainDetailsTable"]/tr/td[1]/div[3]/a[2]/@href',
-			'//*[@id="mainDetailsTable"]/tr/td[1]/div[2]/a[2]/@href',
-			'//*[@id="mainDetailsTable"]/tr/td[1]/div[4]/a[2]/@href'],
-	    'magnet': ['//*[@id="mainDetailsTable"]/tr/td[1]/div[4]/a[1]/@href',
-		       '//*[@id="mainDetailsTable"]/tr/td[1]/div[3]/a[1]/@href',
-		       '//*[@id="mainDetailsTable"]/tr/td[1]/div[2]/a[1]/@href',
-		       '/html/body/div/div/div[5]/table/tr/td/div[4]/a/@href'],
-	    'seeds': ['//*[@id="mainDetailsTable"]/tr/td[1]/div[2]/div[1]/strong/text()',
-		      '//*[@id="mainDetailsTable"]/tr/td[1]/div[3]/div[1]/strong/text()'],
-	    'leech': ['//*[@id="mainDetailsTable"]/tr/td[1]/div[2]/div[2]/strong/text()',
-		      '//*[@id="mainDetailsTable"]/tr/td[1]/div[3]/div[2]/strong/text()'],
-	    'size': ['//*[@id="tab-main"]/div[4]/span/text()[1]', '//*[@id="tab-main"]/div[3]/span/text()[1]',
-		     '//*[@id="tab-main"]/div[3]/span/a/text()', '//*[@id="tab-main"]/div[5]/span/text()[1]'],
-	    'added': ['//*[@id="mainDetailsTable"]/tr/td[1]/div[6]/text()[1]',
-		      '//*[@id="mainDetailsTable"]/tr/td[1]/div[7]/text()[1]']
+	'title': ['//title/text()',],
+	'torrent': ['//*[@id="mainDetailsTable"]/tr/td[1]/div[3]/a[2]/@href',
+		    '//*[@id="mainDetailsTable"]/tr/td[1]/div[2]/a[2]/@href',
+		    '//*[@id="mainDetailsTable"]/tr/td[1]/div[4]/a[2]/@href'],
+	'magnet': ['//*[@id="mainDetailsTable"]/tr/td[1]/div[4]/a[1]/@href',
+		   '//*[@id="mainDetailsTable"]/tr/td[1]/div[3]/a[1]/@href',
+		   '//*[@id="mainDetailsTable"]/tr/td[1]/div[2]/a[1]/@href',
+		   '/html/body/div/div/div[5]/table/tr/td/div[4]/a/@href'],
+	'seeds': ['//*[@id="mainDetailsTable"]/tr/td[1]/div[2]/div[1]/strong/text()',
+		  '//*[@id="mainDetailsTable"]/tr/td[1]/div[3]/div[1]/strong/text()'],
+	'leech': ['//*[@id="mainDetailsTable"]/tr/td[1]/div[2]/div[2]/strong/text()',
+		  '//*[@id="mainDetailsTable"]/tr/td[1]/div[3]/div[2]/strong/text()'],
+	'size': ['//*[@id="tab-main"]/div[4]/span/text()[1]', '//*[@id="tab-main"]/div[3]/span/text()[1]',
+		 '//*[@id="tab-main"]/div[3]/span/a/text()', '//*[@id="tab-main"]/div[5]/span/text()[1]'],
+	'added': ['//*[@id="mainDetailsTable"]/tr/td[1]/div[6]/text()[1]',
+		  '//*[@id="mainDetailsTable"]/tr/td[1]/div[7]/text()[1]']
     }
 
     def trim_size(self, raw_size, response):	
-	size = re.sub(' \(Size: ', '', str(raw_size))
+	size = re.sub(' \(Size: ', '', str(raw_size)) # removing unneeded labels from the div's text
 
 	size_unit = ''
-	size_unit_paths = ['//*[@id="tab-main"]/div[4]/span/span[2]/text()', '//*[@id="tab-main"]/div[3]/span/span[2]/text()',
-			 '//*[@id="tab-main"]/div[3]/span/a/span[2]/text()', '//*[@id="tab-main"]/div[5]/span/span[2]/text()']
+	size_unit_paths = ['//*[@id="tab-main"]/div[4]/span/span[2]/text()', # the "MB" or "GB" from the size
+			   '//*[@id="tab-main"]/div[3]/span/span[2]/text()', # is in another div.
+			   '//*[@id="tab-main"]/div[3]/span/a/span[2]/text()', # This finds that.
+			   '//*[@id="tab-main"]/div[5]/span/span[2]/text()']
 
-	hxs = HtmlXPathSelector(response)		# go in order from first to last
+	hxs = HtmlXPathSelector(response)	    
 	for xp in size_unit_paths:
 	    size_unit = hxs.select(xp).extract()
 	    if size_unit != []:
 		break
 
-	return str(size) + str(size_unit[0])
+	return str(size) + str(size_unit[0]) # returns strings like "240.32 MB"
 
     def trim_added(self, raw_added):
 	added = re.sub('\nAdded on ', '' , str(raw_added))
@@ -72,8 +74,8 @@ class KattSpider(PicoSpider):
 
     def parse_katt_torrent(self, response):
 	page = Torrent()
-	self.try_xpaths(page, self.xpath_dict, response)
-	self.singular(page)
+	self.try_xpaths(page, self.xpath_dict, response)    # actual scraping mostly happens here
+	self.singular(page)			    # Flattens lists of 1 into single data values as needed
 
 	page['size']  = self.trim_size(page['size'], response)	# cleanup before sending into item pipeline
 	page['added'] = self.trim_added(page['added'])
