@@ -13,7 +13,7 @@ Available Spiders
 
 The most developed spider is ["katt"](/piconova/spiders/picokatt.py), for http://kickass.to . It's been tuned to give very reliable data.  
 
-All the other spiders have a lesser degree of specialization. All of the spiders subclass the "PicoSpider" found in `piconova/spiders/picolib.py`, and pass in a dictionary of Xpaths for scraping their torrent pages.  Some override the default callbacks for parsing pages to deal with site-specific issues.  
+All the other spiders have a lesser degree of specialization. All of the spiders subclass the "PicoSpider" found in ["picolib.py"](/piconova/spiders/picolib.py), and pass in a dictionary of Xpaths for scraping their torrent pages.  Some override the default callbacks for parsing pages to deal with site-specific issues.  
 
 To crawl a domain (given that the data store / MongoDB connection is setup), run this from anywhere in the repo directory:
 
