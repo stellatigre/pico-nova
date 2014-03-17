@@ -8,7 +8,8 @@ class H33tSpider(PicoSpider):
     start_urls = ["http://h33t.to"]
     allowed_domains = ["h33t.to"]
 
-    tor_links = '/torrent/'
+    torrent_links = ('/torrent/',)
+    category_links = ('/category/',)
     deny_rules = ''
 
     xpath_dict = {
@@ -22,8 +23,8 @@ class H33tSpider(PicoSpider):
     }
 
     rules = (
-	Rule(SLE(allow=('/torrent/',),), callback='parse_torrent', follow=True),
-	Rule(SLE(allow=('/category/',),), callback='parse_category', follow=True)
+	Rule(SLE(allow=torrent_links,), callback='parse_torrent', follow=True),
+	Rule(SLE(allow=category_links,), callback='parse_category', follow=True)
     )
 
 
