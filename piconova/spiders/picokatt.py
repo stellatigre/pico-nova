@@ -14,7 +14,7 @@ class KattSpider(PicoSpider):
     deny_rules = ('/search/*', 'utorrent.btsearch', '/blog/*', '/hourlydump.txt.gz',
 	      '/user/*', '/community/*', '/comments/*', '/bookmarks/*', '/images/*')
 
-    torrent_links = '/*.html'
+    torrent_links = ('/*.html',)
     category_links = ('ka.tt/*/','kickass.to/*/')
 
     spider_cookies = {
@@ -78,7 +78,7 @@ class KattSpider(PicoSpider):
 
     def parse_katt_torrent(self, response):
 	page = Torrent()
-	self.try_xpaths(page, self.xpath_dict, response)    # actual scraping mostly happens here
+	self.try_fields(page, self.xpath_dict, response)    # actual scraping mostly happens here
 	self.singular(page)				    # turns lists of 1 to single values 
 
 	page['size']  = self.size_with_unit(page['size'], response)	
