@@ -5,7 +5,7 @@ from picolib import PicoSpider
 
 class MiniSpider(PicoSpider):
 
-    name = "nova"
+    name = "piconova"
     start_urls = ["http://mininova.org"]
     allowed_domains = ["mininova.org"]
     deny_rules = ('/name', '/get/', '/comments', '/seeds', '/leech')
@@ -13,7 +13,8 @@ class MiniSpider(PicoSpider):
 
     rules = (
         Rule(SLE(allow=tor_links, deny=deny_rules), callback='parse_mininova_torrent', follow=True),
-        Rule(SLE(allow=('/cat/', '/sub/'), deny=deny_rules), callback='parse_category', follow=True))
+        Rule(SLE(allow=('/cat/', '/sub/'), deny=deny_rules), callback='parse_category', follow=True)
+	)
 
     xpath_dict = {
         'title': ('//*[@id="content"]/h1/text()',),
