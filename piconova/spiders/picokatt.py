@@ -14,7 +14,7 @@ class KattSpider(PicoSpider):
     deny_rules = ('/search/*', 'utorrent.btsearch', '/blog/*', '/hourlydump.txt.gz',
 	      '/user/*', '/community/*', '/comments/*', '/bookmarks/*', '/images/*')
 
-    tor_links = '/*.html'
+    torrent_links = '/*.html'
     categories = ('ka.tt/*/','kickass.to/*/')
 
     spider_cookies = {
@@ -22,7 +22,7 @@ class KattSpider(PicoSpider):
     }
 
     rules = (	
-	Rule(SLE(allow=tor_links, deny=deny_rules, allow_domains=allowed_domains, unique=True), 
+	Rule(SLE(allow=torrent_links, deny=deny_rules, allow_domains=allowed_domains, unique=True), 
 	    callback='parse_katt_torrent', follow=True),
 	
 	Rule(SLE(allow=categories, deny=deny_rules, allow_domains=allowed_domains, unique=True),
