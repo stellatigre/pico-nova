@@ -1,4 +1,4 @@
-from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor as SLE
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor as Linx
 from scrapy.selector import HtmlXPathSelector
 from scrapy.contrib.spiders import Rule
 from picolib import PicoSpider
@@ -22,10 +22,10 @@ class KattSpider(PicoSpider):
     }
 
     rules = (	
-	Rule(SLE(allow=torrent_links, deny=deny_rules, allow_domains=allowed_domains, unique=True), 
+	Rule(Linx(allow=torrent_links, deny=deny_rules, allow_domains=allowed_domains, unique=True), 
 	    callback='parse_katt_torrent', follow=True),
 	
-	Rule(SLE(allow=category_links, deny=deny_rules, allow_domains=allowed_domains, unique=True),
+	Rule(Linx(allow=category_links, deny=deny_rules, allow_domains=allowed_domains, unique=True),
 	    callback='parse_category', follow=True)
     )
 
