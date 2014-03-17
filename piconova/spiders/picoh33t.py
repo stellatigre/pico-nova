@@ -1,5 +1,3 @@
-from scrapy.contrib.spiders import Rule
-from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor as SLE
 from picolib import PicoSpider
 
 class H33tSpider(PicoSpider):
@@ -8,8 +6,9 @@ class H33tSpider(PicoSpider):
     start_urls = ["http://h33t.to"]
     allowed_domains = ["h33t.to"]
 
-    tor_links = '/torrent/'
-    deny_rules = ''
+    torrent_links = '/torrent/*'
+    category_links = '/category/'
+    deny_rules = ('/member/*', 'fr33sp33k',)
 
     xpath_dict = {
 	'torrent' : ('/html/body/table/tr/td/table/tr[3]/td/table/tr/td/div/table[1]/tr[2]/td[2]/table/tr[1]/td[2]/div/a/@href',), 
@@ -20,11 +19,6 @@ class H33tSpider(PicoSpider):
 	'size'    : ('//*[@id="trackers"]/table/tr[*]/td[2]/span/text()',),
 	'added'   : ('/html/body/table/tr/td/table/tr[3]/td/table/tr/td/div/table[1]/tr[7]/td[2]/text()',),
     }
-
-    rules = (
-	Rule(SLE(allow=('/torrent/',),), callback='parse_torrent', follow=True),
-	Rule(SLE(allow=('/category/',),), callback='parse_category', follow=True)
-    )
 
 
 spider = PicoSpider()

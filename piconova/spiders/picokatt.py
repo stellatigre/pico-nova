@@ -1,33 +1,36 @@
-from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor as SLE
 from scrapy.selector import HtmlXPathSelector
-from scrapy.contrib.spiders import Rule
 from picolib import PicoSpider
 from items import Torrent
 import re
 
 class KattSpider(PicoSpider):
 
+    def __init__(self):
+        #self.name = "katt"
+	PicoSpider.__init__(self)
+        self.start_urls = ["http://ka.tt", "http://kat.ph", "http://kickass.to"]
+	self.allowed_domains = ["ka.tt", "kat.ph", "kickass.to"]
+        self.torrent_links = '*.html'
+        self.category_links = ('ka.tt/*/','kickass.to/*/')
+	self.torrent_callback = 'parse_katt_torrent'
+	self.deny_rules = ('/search/*', 'utorrent.btsearch', '/blog/*', '/hourlydump.txt.gz',
+	                '/user/*', '/community/*', '/comments/*', '/bookmarks/*', '/images/*')
+
     name = "katt"
-    start_urls = ["http://ka.tt", "http://kat.ph", "http://kickass.to"]
-    allowed_domains = ["ka.tt", "kat.ph", "kickass.to"]
+    #start_urls = ["http://ka.tt", "http://kat.ph", "http://kickass.to"]
+    #allowed_domains = ["ka.tt", "kat.ph", "kickass.to"]
 
-    deny_rules = ('/search/*', 'utorrent.btsearch', '/blog/*', '/hourlydump.txt.gz',
-	      '/user/*', '/community/*', '/comments/*', '/bookmarks/*', '/images/*')
+    #deny_rules = ('/search/*', 'utorrent.btsearch', '/blog/*', '/hourlydump.txt.gz',
+#	      '/user/*', '/community/*', '/comments/*', '/bookmarks/*', '/images/*')
 
-    torrent_links = '/*.html'
-    categories = ('ka.tt/*/','kickass.to/*/')
+ #   torrent_links = 'kickass.to/*.html'
+  #  category_links = ('ka.tt/*/','kickass.to/*/')
 
+   # torrent_callback = 'parse_katt_torrent'	    # override callback for torrent parsing
+    
     spider_cookies = {
 	'user_legal_age' : 'yes'	    # Try to make sure adult pages are scraped too
     }
-
-    rules = (	
-	Rule(SLE(allow=torrent_links, deny=deny_rules, allow_domains=allowed_domains, unique=True), 
-	    callback='parse_katt_torrent', follow=True),
-	
-	Rule(SLE(allow=categories, deny=deny_rules, allow_domains=allowed_domains, unique=True),
-	    callback='parse_category', follow=True)
-    )
 
     xpath_dict = {			    # xpaths are tried in the order listed in their array,
 	'title': ['//title/text()',],						# so order matters.

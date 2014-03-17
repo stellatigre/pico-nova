@@ -1,5 +1,5 @@
 from scrapy.contrib.spiders import Rule
-from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor as SLE
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor as Linx
 from picolib import PicoSpider
 
 class PirateSpider(PicoSpider):
@@ -8,8 +8,10 @@ class PirateSpider(PicoSpider):
     start_urls = ["http://thepiratebay.se/browse"]
     allowed_domains = ["thepiratebay.se"]
 
-    tor_links = '/torrent/'
-    deny_rules = ('/img*', '/%0Ahttp://*')
+    torrent_links = '/torrent/*'
+    category_links = '/browse/*'
+
+    deny_rules = ('/img*', '/%0Ahttp://*', '/doodles/', '/blog/*',)
 
     xpath_dict = {
 	'title'    : ('//*[@id="title"]'),
@@ -31,17 +33,15 @@ class PirateSpider(PicoSpider):
 		      '//*[@id="details"]/dl[2]/dd[2]/a/text()')
     }		
 																			    
-    rules = (
-	Rule(SLE(allow=('/torrent/',),), callback='parse_torrent', follow=True),
-	Rule(SLE(allow=('/browse/*/*/7',),), callback='tpb_category_org', follow=True),
-	Rule(SLE(allow=('/browse/',),), callback='parse_category', follow=True)
+    rules = PicoSpider.rules + (
+	Rule(Linx(allow=('/browse/*/*/7',),deny=deny_rules), callback='tpb_category_org', follow=True),
     )
 
     # make torrent page requests from subcategories
     def tpb_category_org(self, response):
-	slx = SgmlLinkExtractor()
+	slx = Linx()
 	sub_list = slx.extract_links(response)
-	sub_req = get_reqs(sub_list)
+	sub_req = self.get_reqs(sub_list)
 	m = self.make_requests_for_url(sub_req)
 	return m
 
