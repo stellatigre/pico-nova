@@ -3,7 +3,7 @@ pico-nova
 
 Scrapers / crawlers for 5 popular public BitTorrent sites: 
 
-http://kickass.to, http://mininova.org, http://thepiratebay.se, http://h33t.com, & http://fenopy.se . 
+http://kickass.to, http://mininova.org, http://thepiratebay.se, http://h33t.to, & http://fenopy.se . 
 
 Uses the Scrapy web scraping framework for Python 2.7 - http://scrapy.org/
 
@@ -23,7 +23,7 @@ Domain   :  Spider Name
 ---------------------------
 kickass.to : ["katt"](/piconova/spiders/picokatt.py)
 
-h33t.com :  ["picoh33t"](/piconova/spiders/picoh33t.py)
+h33t.to :  ["picoh33t"](/piconova/spiders/picoh33t.py)
 
 thepiratebay.se : ["picobay"](/piconova/spiders/picobay.py)
 
