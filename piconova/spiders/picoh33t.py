@@ -5,8 +5,8 @@ from picolib import PicoSpider
 class H33tSpider(PicoSpider):
 	
     name = "picoh33t"
-    start_urls = ["http://h33t.com"]
-    allowed_domains = ["h33t.com"]
+    start_urls = ["http://h33t.to"]
+    allowed_domains = ["h33t.to"]
 
     tor_links = '/torrent/'
     deny_rules = ''
