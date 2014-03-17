@@ -1,5 +1,5 @@
 from scrapy.contrib.spiders import Rule
-from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor as SLE
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor as Linx
 from picolib import PicoSpider
 
 class H33tSpider(PicoSpider):
@@ -23,8 +23,8 @@ class H33tSpider(PicoSpider):
     }
 
     rules = (
-	Rule(SLE(allow=torrent_links,), callback='parse_torrent', follow=True),
-	Rule(SLE(allow=category_links,), callback='parse_category', follow=True)
+	Rule(Linx(allow=torrent_links,), callback='parse_torrent', follow=True),
+	Rule(Linx(allow=category_links,), callback='parse_category', follow=True)
     )
 
 

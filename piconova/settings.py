@@ -2,7 +2,7 @@
 #http://doc.scrapy.org/topics/settings.html
 
 BOT_NAME = 'piconova'
-CONCURRENT_REQUESTS = 666
+CONCURRENT_REQUESTS = 720
 COOKIES_ENABLED = True
 COOKIES_DEBUG = False
 LOG_LEVEL = 'DEBUG'

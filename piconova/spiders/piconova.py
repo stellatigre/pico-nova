@@ -1,4 +1,4 @@
-from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor as SLE
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor as Linx
 from scrapy.contrib.spiders import Rule
 from items import Torrent
 from picolib import PicoSpider
@@ -10,11 +10,12 @@ class MiniSpider(PicoSpider):
     allowed_domains = ["mininova.org"]
     
     deny_rules = ('/name', '/get/', '/comments', '/seeds', '/leech')
-    tor_links = '/tor/'
+    torrent_links = '/tor/'
+    category_links = ('/cat/', '/sub/')
 
     rules = (
-        Rule(SLE(allow=tor_links, deny=deny_rules), callback='parse_mininova_torrent', follow=True),
-        Rule(SLE(allow=('/cat/', '/sub/'), deny=deny_rules), callback='parse_category', follow=True)
+        Rule(Linx(allow=torrent_links, deny=deny_rules), callback='parse_mininova_torrent', follow=True),
+        Rule(Linx(allow=category_links, deny=deny_rules), callback='parse_category', follow=True)
     )
 
     xpath_dict = {
@@ -33,11 +34,14 @@ class MiniSpider(PicoSpider):
 
     # mininova data needs some cleanup so we override this one
     def parse_mininova_torrent(self, response):
-        page = Torrent()
-        try_xpaths(page, self.xpath_dict, response)
-        if len(page['torrent']) > 1:
+	page = Torrent()
+        self.try_xpaths(page, self.xpath_dict, response)
+        
+	if len(page['torrent']) > 1:
             del page['torrent'][1]
+
         page['added'] = page['added'][2:]
-        return page
+        
+	return page
 
 spider = MiniSpider()
