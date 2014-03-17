@@ -97,5 +97,38 @@
 	 'scheduler/enqueued/memory': 96209,
 	 'start_time': datetime.datetime(2014, 3, 17, 1, 43, 22, 447761)}
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+2014-03-17 01:01:55-0500 [katt] INFO: Dumping Scrapy stats:
+	{'downloader/exception_count': 1509,
+	 'downloader/exception_type_count/twisted.internet.error.DNSLookupError': 1264,
+	 'downloader/exception_type_count/twisted.internet.error.TCPTimedOutError': 244,
+	 'downloader/exception_type_count/twisted.internet.error.TimeoutError': 1,
+	 'downloader/request_bytes': 54798985,
+	 'downloader/request_count': 134382,
+	 'downloader/request_method_count/GET': 134382,
+	 'downloader/response_bytes': 901234211,
+	 'downloader/response_count': 132873,
+	 'downloader/response_status_count/200': 97621,
+	 'downloader/response_status_count/301': 11259,
+	 'downloader/response_status_count/302': 22226,
+	 'downloader/response_status_count/404': 1731,
+	 'downloader/response_status_count/503': 33,
+	 'downloader/response_status_count/504': 1,
+	 'downloader/response_status_count/523': 2,
+	 'finish_reason': 'shutdown',
+	 'finish_time': datetime.datetime(2014, 3, 17, 6, 1, 55, 202464),
+	 'item_scraped_count': 15998,
+	 'log_count/DEBUG': 166583,
+	 'log_count/ERROR': 503,
+	 'log_count/INFO': 227,
+	 'request_depth_max': 319,
+	 'response_received_count': 99355,
+	 'scheduler/dequeued': 134382,
+	 'scheduler/dequeued/memory': 134382,
+	 'scheduler/enqueued': 362431,
+	 'scheduler/enqueued/memory': 362431,
+	 'spider_exceptions/AttributeError': 1,
+	 'spider_exceptions/IndexError': 8,
+	 'start_time': datetime.datetime(2014, 3, 17, 2, 22, 38, 721198)}
 
