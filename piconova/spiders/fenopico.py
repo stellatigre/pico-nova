@@ -13,9 +13,9 @@ class FenoPico(PicoSpider):
     cat_links = ['/category/']
 
     rules = (
-        Rule(SLE(allow=self.tor_links, deny=self.deny_rules), callback='parse_torrent', follow=True),
-        Rule(SLE(allow=self.cat_links, deny=self.deny_rules), callback='parse_category', follow=True)
-	)
+        Rule(SLE(allow=tor_links, deny=deny_rules), callback='parse_torrent', follow=True),
+        Rule(SLE(allow=cat_links, deny=deny_rules), callback='parse_category', follow=True)
+    )
 
     xpath_dict = {
         'title': ('//*[@id="breadcrumb"]/li[3]/h1/text()',),

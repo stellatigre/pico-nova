@@ -1,31 +1,30 @@
 from scrapy.contrib.spiders import Rule
-from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor as SLE
 from picolib import PicoSpider
-
 
 class H33tSpider(PicoSpider):
 	
-	name = "picoh33t"
-	start_urls = ["http://h33t.com"]
-	allowed_domains = ["h33t.com"]
+    name = "picoh33t"
+    start_urls = ["http://h33t.com"]
+    allowed_domains = ["h33t.com"]
 
-	tor_links = '/torrent/'
-	deny_rules = ''
+    tor_links = '/torrent/'
+    deny_rules = ''
 
-	xpath_dict = {
-		'torrent' : ('/html/body/table/tr/td/table/tr[3]/td/table/tr/td/div/table[1]/tr[2]/td[2]/table/tr[1]/td[2]/div/a/@href',), 
-		'magnet'  : ('/html/body/table/tr/td/table/tr[3]/td/table/tr/td/div/table[1]/tr[2]/td[2]/table/tr[1]/td[3]/div/a/@href',),
-		'title'   : ('//title/text()',), 
-		'updated' : ('//*[@id="trackers"]/table/tr[*]/td[5]/text()',),
-		'seeds'   : ('//*[@id="trackers"]/table/tr[*]/td[2]/span/text()',),
-		'size'    : ('//*[@id="trackers"]/table/tr[*]/td[2]/span/text()',),
-		'added'   : ('/html/body/table/tr/td/table/tr[3]/td/table/tr/td/div/table[1]/tr[7]/td[2]/text()',),
-	}
+    xpath_dict = {
+	'torrent' : ('/html/body/table/tr/td/table/tr[3]/td/table/tr/td/div/table[1]/tr[2]/td[2]/table/tr[1]/td[2]/div/a/@href',), 
+	'magnet'  : ('/html/body/table/tr/td/table/tr[3]/td/table/tr/td/div/table[1]/tr[2]/td[2]/table/tr[1]/td[3]/div/a/@href',),
+	'title'   : ('//title/text()',), 
+	'updated' : ('//*[@id="trackers"]/table/tr[*]/td[5]/text()',),
+	'seeds'   : ('//*[@id="trackers"]/table/tr[*]/td[2]/span/text()',),
+	'size'    : ('//*[@id="trackers"]/table/tr[*]/td[2]/span/text()',),
+	'added'   : ('/html/body/table/tr/td/table/tr[3]/td/table/tr/td/div/table[1]/tr[7]/td[2]/text()',),
+    }
 
-	rules = (
-		Rule(SgmlLinkExtractor(allow=('/torrent/',),), callback='parse_torrent', follow=True),
-		Rule(SgmlLinkExtractor(allow=('/category/',),), callback='parse_category', follow=True)
-	)
+    rules = (
+	Rule(SLE(allow=('/torrent/',),), callback='parse_torrent', follow=True),
+	Rule(SLE(allow=('/category/',),), callback='parse_category', follow=True)
+    )
 
 
 spider = PicoSpider()

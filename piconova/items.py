@@ -11,4 +11,4 @@ class Torrent(Item):
 	size     = Field()
 	uploader = Field()
 	visit_id = Field()
-	visit_status = Field()
+	visited  = Field()
