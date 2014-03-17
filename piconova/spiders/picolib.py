@@ -22,14 +22,17 @@ class PicoSpider(CrawlSpider):
 	for field in torrent:				# into single values 
 	    if len(torrent[field]) == 1:
 		torrent[field] = torrent[field][0]
+
+    def try_xpaths(self, xpaths_for_field, hxs):
+	for xp in xpaths_for_field:
+	    field = hxs.select(xp).extract()		# scrape value from page:
+	    if field:			    		# if we got a value, 
+		return field				# move on to the next field
  
-    def try_xpaths(self, Torrent, xp_dict, response):	# the tuples of xpaths in xpath_dict
-	hxs = HtmlXPathSelector(response)		# should go in order from first->last
-	for field in xp_dict:				    # to be tried on each page
-	    for xp in xp_dict[field]:
-		Torrent[field] = hxs.select(xp).extract()
-		if Torrent[field]:				# if we got a value, 
-		    break					# move on to the next field
+    def try_fields(self, Torrent, xp_dict, response):	    # the tuples of xpaths in xpath_dict
+	hxs = HtmlXPathSelector(response)		    # should go in order from first->last
+	for field in xp_dict:					    # to be tried on each page
+	    Torrent[field] = self.try_xpaths(xp_dict[field], hxs)
 
     def make_requests_for_url(self, link):
 	yield Request(link.url, dont_filter=False, meta={'start_url': link.url}, cookies=self.spider_cookies)
@@ -48,7 +51,7 @@ class PicoSpider(CrawlSpider):
 
     def parse_torrent(self, response):
 	page = Torrent()
-	self.try_xpaths(page, self.xpath_dict, response)    # actual value extraction happens here
+	self.try_fields(page, self.xpath_dict, response)    # actual value extraction happens here
     	self.singular(page)
-	yield page
+	return page
 
