@@ -11,9 +11,7 @@ Uses the Scrapy web scraping framework for Python 2.7 - http://scrapy.org/
 Available Spiders
 =================
 
-The most developed spider is "katt", for http://kickass.to . It's been tuned to give very reliable data.  It is found in 
-
-    piconova/spiders/picokatt.py
+The most developed spider is ["katt"](/piconova/spiders/picokatt.py), for http://kickass.to . It's been tuned to give very reliable data.  
 
 All the other spiders have a lesser degree of specialization. All of the spiders subclass the "PicoSpider" found in `piconova/spiders/picolib.py`, and pass in a dictionary of Xpaths for scraping their torrent pages.  Some override the default callbacks for parsing pages to deal with site-specific issues.  
 
@@ -23,15 +21,15 @@ To crawl a domain (given that the data store / MongoDB connection is setup), run
     
 Domain   :  Spider Name
 ---------------------------
-kickass.to : "picokatt"
+kickass.to : ["katt"](/piconova/spiders/picokatt.py)
 
-h33t.com :  "picoh33t"
+h33t.com :  ["picoh33t"](/piconova/spiders/picoh33t.py)
 
-thepiratebay.se : "picobay"
+thepiratebay.se : ["picobay"](/piconova/spiders/picobay.py)
 
-mininova.org : "piconova"
+mininova.org : ["piconova"](/piconova/spiders/piconova.py)
 
-fenopy.se : "fenopico"
+fenopy.se : ["fenopico"](/piconova/spiders/fenopico.py)
 
 
 Dependencies & Installation
@@ -60,6 +58,19 @@ This spider stores scraped torrent objects in a MongoDB collection.  To setup:
     db.torrents.find().length() 
     
 See http://docs.mongodb.org/manual/reference/method/db.collection.find/#db.collection.find for more on querying if needed.
+
+Performance / Statistics 
+========================
+
+I've included a [text file](/past_run_stats.txt) which includes statistics dumps from test runs of the `katt`(kickass.to) spider _only_.
+
+All test runs were done on a moderately powerful Ubuntu desktop & modest residential internet connection.
+
+Notable information:
+* Longest run scraped 26080 items in 2 1/2 hours , averaging 2.9 objects scraped per second.
+* Data collection is very accurate & thorough, 100% in recent runs after some Xpath tweaks - on the last test run, not a single object inserted into the DB had a missing or incorrect field, out of 15998.
+
+
  
 
 
