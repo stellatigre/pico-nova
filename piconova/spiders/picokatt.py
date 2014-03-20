@@ -62,8 +62,11 @@ class KattSpider(PicoSpider):
 	    size_unit = hxs.select(xp).extract()	    # TODO: Fix deprecation warnings here
 	    if size_unit != []:
 		break
-
-	return str(size) + str(size_unit[0])			# returns strings like "240.32 MB"
+	
+	if size_unit == [] or '':
+	    return str(size)					# if we didn't find the unit, abort
+	else:
+	    return str(size) + str(size_unit[0])		# returns strings like "240.32 MB"
 
     def trim_added(self, raw_added):				# Massage 'added on' dates
 	added = re.sub('\nAdded on ', '' , str(raw_added))	# into a regular format,
