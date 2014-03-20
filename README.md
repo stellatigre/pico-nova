@@ -9,18 +9,18 @@ Uses the Scrapy web scraping framework for Python 2.7 - http://scrapy.org/
 
 
 Available Spiders
-=================
+-----------------
 
 The most developed spider is ["katt"](/piconova/spiders/picokatt.py), for http://kickass.to . It's been tuned to give very reliable data.  
 
-All the other spiders have a lesser degree of specialization. All of the spiders subclass the "PicoSpider" found in ["picolib.py"](/piconova/spiders/picolib.py), and pass in a dictionary of Xpaths for scraping their torrent pages.  Some override the default callbacks for parsing pages to deal with site-specific issues.  
+The other 4 spiders have a lesser degree of specialization. All of the spiders subclass the "PicoSpider" found in ["picolib.py"](/piconova/spiders/picolib.py), and pass in data about their specific site to pre-established variables from the PicoSpider : such as regular expressions to match links against, and a dictionary of Xpaths for scraping their torrent pages.  Some override the default callbacks for parsing pages to deal with site-specific issues / data cleanup.  
 
 To crawl a domain (given that the data store / MongoDB connection is setup), run this from anywhere in the repo directory:
 
     scrapy crawl <spider name>
     
-Domain   :  Spider Name
----------------------------
+### Domain   :  Spider Name ###
+
 kickass.to : ["katt"](/piconova/spiders/picokatt.py)
 
 h33t.to :  ["picoh33t"](/piconova/spiders/picoh33t.py)
@@ -33,14 +33,14 @@ fenopy.se : ["fenopico"](/piconova/spiders/fenopico.py)
 
 
 Dependencies & Installation
-===========================
+--------------------------
 
 * Python 2.7
 * Scrapy - depends on `pip`, `lxml` , `OpenSSL` ; see http://doc.scrapy.org/en/latest/intro/install.html for more on installing scrapy
 
 
 Data Store Setup / Use (MongoDB)
-===============================
+--------------------------------
 
 This spider stores scraped torrent objects in a MongoDB collection.  To setup:
 
@@ -60,7 +60,7 @@ This spider stores scraped torrent objects in a MongoDB collection.  To setup:
 See http://docs.mongodb.org/manual/reference/method/db.collection.find/#db.collection.find for more on querying if needed.
 
 Performance / Statistics 
-========================
+------------------------
 
 I've included a [text file](/past_run_stats.txt) which includes statistics dumps from test runs of the `katt`(kickass.to) spider _only_.
 
