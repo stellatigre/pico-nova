@@ -1,4 +1,4 @@
-from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor as SLE
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor as Linx
 from scrapy.contrib.spiders import Rule
 from picolib import PicoSpider
 
@@ -8,13 +8,13 @@ class FenoPico(PicoSpider):
     name = "fenopico"
     start_urls = ["http://fenopy.se"]
     allowed_domains = ["fenopy.se"]
-    tor_links = ['/torrent/']
+    torrent_links = ['/torrent/']
     deny_rules = ['/download.torrent']
-    cat_links = ['/category/']
+    category_links = ['/category/']
 
     rules = (
-        Rule(SLE(allow=tor_links, deny=deny_rules), callback='parse_torrent', follow=True),
-        Rule(SLE(allow=cat_links, deny=deny_rules), callback='parse_category', follow=True)
+        Rule(Linx(allow=torrent_links, deny=deny_rules), callback='parse_torrent', follow=True),
+        Rule(Linx(allow=category_links, deny=deny_rules), callback='parse_category', follow=True)
     )
 
     xpath_dict = {
