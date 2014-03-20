@@ -2,9 +2,10 @@
 #http://doc.scrapy.org/topics/settings.html
 
 BOT_NAME = 'piconova'
-CONCURRENT_REQUESTS = 420
+CONCURRENT_REQUESTS = 720
 COOKIES_ENABLED = True
 COOKIES_DEBUG = False
+LOG_LEVEL = 'DEBUG'
 SPIDER_MODULES = ['piconova.spiders']
 NEWSPIDER_MODULE = 'piconova.spiders'
 

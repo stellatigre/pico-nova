@@ -15,6 +15,6 @@ class MongoDBPipeline(object):
 
     def process_item(self, item, spider):
         self.collection.insert(dict(item))
-        log.msg('Item written to MongoDB database %s/%s' % (self.db, self.col),
-                level=log.DEBUG, spider=spider)
+        #log.msg('Item written to MongoDB database %s/%s' % (self.db, self.col),
+        #        level=log.DEBUG, spider=spider)
         return item
