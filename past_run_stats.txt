@@ -131,4 +131,36 @@
 	 'spider_exceptions/AttributeError': 1,
 	 'spider_exceptions/IndexError': 8,
 	 'start_time': datetime.datetime(2014, 3, 17, 2, 22, 38, 721198)}
+	 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	 'downloader/exception_type_count/twisted.web._newclient.ResponseNeverReceived': 7,
+	 'downloader/request_bytes': 86689591,
+	 'downloader/request_count': 218273,
+	 'downloader/request_method_count/GET': 218273,
+	 'downloader/response_bytes': 1473801883,
+	 'downloader/response_count': 215380,
+	 'downloader/response_status_count/200': 157483,
+	 'downloader/response_status_count/301': 17488,
+	 'downloader/response_status_count/302': 34659,
+	 'downloader/response_status_count/404': 2581,
+	 'downloader/response_status_count/500': 62,
+	 'downloader/response_status_count/502': 104,
+	 'downloader/response_status_count/503': 2997,
+	 'downloader/response_status_count/504': 6,
+	 'finish_reason': 'shutdown',
+	 'finish_time': datetime.datetime(2014, 3, 21, 4, 36, 55, 147505),
+	 'item_scraped_count': 36047,
+	 'log_count/DEBUG': 255048,
+	 'log_count/ERROR': 951,
+	 'log_count/INFO': 457,
+	 'request_depth_max': 302,
+	 'response_received_count': 160789,
+	 'scheduler/dequeued': 218273,
+	 'scheduler/dequeued/memory': 218273,
+	 'scheduler/enqueued': 538915,
+	 'scheduler/enqueued/memory': 538915,
+	 'spider_exceptions/TypeError': 1,
+	 'start_time': datetime.datetime(2014, 3, 20, 21, 6, 59, 521429)}
+2014-03-20 23:36:55-0500 [katt] INFO: Spider closed (shutdown)
 
