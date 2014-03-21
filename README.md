@@ -68,7 +68,7 @@ All test runs were done on a moderately powerful Ubuntu desktop & modest residen
 
 Notable information:
 * Longest run scraped 36047 items in a bit over 3 hours.
-* Data collection is very accurate & thorough, 100% in recent runs after some Xpath tweaks - on the last test run, not a single object inserted into the DB had a missing or incorrect field, out of 15998.
+* Data collection is very accurate & thorough, 100% in recent runs after some Xpath tweaks - on one test run, I did not find a single object inserted into the DB had a missing or incorrect field, out of 15998.
 
 
  
