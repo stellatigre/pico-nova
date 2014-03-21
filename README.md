@@ -67,7 +67,7 @@ I've included a [text file](/past_run_stats.txt) which includes statistics dumps
 All test runs were done on a moderately powerful Ubuntu desktop & modest residential internet connection.
 
 Notable information:
-* Longest run scraped 26080 items in 2 1/2 hours , averaging 2.9 objects scraped per second.
+* Longest run scraped 36047 items in a bit over 3 hours.
 * Data collection is very accurate & thorough, 100% in recent runs after some Xpath tweaks - on the last test run, not a single object inserted into the DB had a missing or incorrect field, out of 15998.
 
 
